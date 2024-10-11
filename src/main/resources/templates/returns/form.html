@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${return.id == null ? 'Создание возврата' : 'Редактирование возврата'}"></title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/returns/returns.css">
+</head>
+<body>
+<header>
+    <h1 th:text="${return.id == null ? 'Создание нового возврата' : 'Редактирование возврата'}"></h1>
+    <nav>
+        <a href="/returns" class="btn btn-primary">К списку возвратов</a>
+    </nav>
+</header>
+<main>
+    <form th:action="@{${return.id == null ? '/returns/create' : '/returns/edit/' + return.id}}" th:object="${return}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="order">Заказ:</label>
+            <select id="order" th:field="*{order.id}" required>
+                <option value="">Выберите заказ</option>
+                <option th:each="order : ${orders}"
+                        th:value="${order.id}"
+                        th:text="${order.id}">
+                </option>
+            </select>
+            <span class="error" th:if="${#fields.hasErrors('order')}" th:errors="*{order}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="returnDate">Дата возврата:</label>
+            <input type="datetime-local" id="returnDate" th:field="*{returnDate}" required>
+            <span class="error" th:if="${#fields.hasErrors('returnDate')}" th:errors="*{returnDate}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="reason">Причина возврата:</label>
+            <textarea id="reason" th:field="*{reason}" required></textarea>
+            <span class="error" th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="/returns" class="btn btn-secondary">Отмена</a>
+    </form>
+</main>
+</body>
+</html>

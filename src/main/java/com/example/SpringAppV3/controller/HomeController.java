@@ -1,0 +1,22 @@
+package com.example.SpringAppV3.controller;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/home")
+public class HomeController {
+
+    @GetMapping
+    public String home() {
+       /* Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Если пользователь аутентифицирован, перенаправляем его на /welcome
+        if (authentication != null && authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
+            return "redirect:/welcome";
+        }
+        return "redirect:/register"; // Иначе на страницу регистрации*/
+        return "index";
+    }
+}

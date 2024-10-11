@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список возвратов</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/returns/returns.css">
+</head>
+<body>
+<header>
+    <h1>Управление возвратами</h1>
+    <nav>
+        <a href="/" class="btn btn-primary">На главную</a>
+    </nav>
+</header>
+<main>
+    <a href="/returns/create" class="btn btn-primary">Создать новый возврат</a>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Заказ</th>
+            <th>Дата возврата</th>
+            <th>Причина возврата</th>
+            <th>Сумма возврата</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="return : ${returns}">
+            <td th:text="${return.id}"></td>
+            <td th:text="${return.order.id}"></td>
+            <td th:text="${#temporals.format(return.returnDate, 'dd.MM.yyyy HH:mm')}"></td>
+            <td th:text="${return.reason}"></td>
+            <td>
+                <a th:href="@{/returns/edit/{id}(id=${return.id})}" class="btn btn-edit">Редактировать</a>
+                <a th:href="@{/returns/delete/{id}(id=${return.id})}" class="btn btn-delete">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

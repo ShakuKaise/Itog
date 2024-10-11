@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${genre.id == null ? 'Создание жанра' : 'Редактирование жанра'}"></title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/genres/genres.css">
+</head>
+<body>
+<header>
+    <h1 th:text="${genre.id == null ? 'Создание нового жанра' : 'Редактирование жанра'}"></h1>
+    <nav>
+        <a href="/genres" class="btn btn-primary">К списку жанров</a>
+    </nav>
+</header>
+<main>
+    <form th:action="@{${genre.id == null ? '/genres/create' : '/genres/edit/' + genre.id}}" th:object="${genre}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="name">Название:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="/genres" class="btn btn-secondary">Отмена</a>
+    </form>
+</main>
+</body>
+</html>

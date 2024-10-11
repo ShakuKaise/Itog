@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${publisher.id == null ? 'Создание издательства' : 'Редактирование издательства'}"></title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/publishers/publishers.css">
+</head>
+<body>
+<header>
+    <h1 th:text="${publisher.id == null ? 'Создание нового издательства' : 'Редактирование издательства'}"></h1>
+    <nav>
+        <a href="/publishers" class="btn btn-primary">К списку издательств</a>
+    </nav>
+</header>
+<main>
+    <form th:action="@{${publisher.id == null ? '/publishers/create' : '/publishers/edit/' + publisher.id}}" th:object="${publisher}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="name">Название:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="/publishers" class="btn btn-secondary">Отмена</a>
+    </form>
+</main>
+</body>
+</html>
